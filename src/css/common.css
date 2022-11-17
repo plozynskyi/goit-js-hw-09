@@ -16,3 +16,22 @@ img {
   display: block;
   max-width: 100%;
 }
+
+/* button {
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: rgb(0 0 0 / 75%) -4px 4px 5px 0px,
+    rgb(0 0 0 / 0%) -8px 8px 5px 0px;
+} */
+
+.timer {
+  font-weight: 500;
+  font-size: 20;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  row-gap: 50px;
+}
