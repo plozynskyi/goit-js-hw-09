@@ -14,13 +14,28 @@ const options = {
 
 refs = {
   input: document.querySelector('#datetime-picker'),
-  seconds: document.querySelector('[data-seconds]'),
-  minutes: document.querySelector('[data-minutes]'),
-  hours: document.querySelector('[data-hours]'),
-  days: document.querySelector('[data-days]'),
+  startButton: document.querySelector('[data-start]'),
+  secondSpan: document.querySelector('[data-seconds]'),
+  minuteSpan: document.querySelector('[data-minutes]'),
+  hourSpan: document.querySelector('[data-hours]'),
+  daySpan: document.querySelector('[data-days]'),
 };
 
 flatpickr(refs.input, options);
+
+const timer = {
+  start() {
+    const startTime = Date.now();
+    setInterval(() => {
+      const currentTime = Date.now();
+      const deltaTime = currentTime - startTime;
+      const timeComponents = convertMs(deltaTime);
+      console.log(timeComponents);
+    }, 1000);
+  },
+};
+
+refs.startButton.addEventListener('click', timer);
 
 function convertMs(ms) {
   const second = 1000;
@@ -34,8 +49,11 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-convertMs(onClose);
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
 
+refs.secondSpan.value(...seconds);
 // console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
 // console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
 // console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
