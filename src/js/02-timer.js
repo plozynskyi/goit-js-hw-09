@@ -23,37 +23,56 @@ refs = {
 
 flatpickr(refs.input, options);
 
+// let qqqq = refs.input.value;
+// console.log(qqqq.getTime());
+
 const timer = {
+  intervalId: null,
+  isActive: false,
   start() {
+    if (this.isActive) {
+      return;
+    }
     const startTime = Date.now();
+    this.isActive = true;
+    const date = new Date(refs.input.value).getTime();
+    console.log(date);
     setInterval(() => {
       const currentTime = Date.now();
-      const deltaTime = currentTime - startTime;
-      const timeComponents = convertMs(deltaTime);
-      console.log(timeComponents);
+      const date = new Date(refs.input.value).getTime();
+      const deltaTime = currentTime - date;
+      const { days, hours, minutes, seconds } = convertMs(deltaTime);
+      updateTimeIterface({ days, hours, minutes, seconds });
+      console.log(`${days}:${hours}:${minutes}:${seconds}`);
+      console.log(currentTime);
+      console.log();
     }, 1000);
   },
 };
 
-refs.startButton.addEventListener('click', timer);
+refs.startButton.addEventListener('click', () => timer.start());
 
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
-  const days = Math.floor(ms / day);
-  const hours = Math.floor((ms % day) / hour);
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const days = pad(Math.floor(ms / day));
+  const hours = pad(Math.floor((ms % day) / hour));
+  const minutes = pad(Math.floor(((ms % day) % hour) / minute));
+  const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
   return { days, hours, minutes, seconds };
+}
+
+function updateTimeIterface({ days, hours, minutes, seconds }) {
+  refs.secondSpan.textContent = `${seconds}`;
+  refs.minuteSpan.textContent = `${minutes}`;
+  refs.hourSpan.textContent = `${hours}`;
+  refs.daySpan.textContent = `${days}`;
 }
 
 function pad(value) {
   return String(value).padStart(2, '0');
 }
-
-refs.secondSpan.value(...seconds);
-// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+// refs.secondSpan.textContent;
+// console.dir(refs.secondSpan.textContent);
