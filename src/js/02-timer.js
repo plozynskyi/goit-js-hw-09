@@ -7,6 +7,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  enableSeconds: true,
   onClose(selectedDates) {
     const date = new Date(selectedDates[0]).getTime();
     console.log(date);
@@ -29,6 +30,7 @@ refs = {
   daySpan: document.querySelector('[data-days]'),
 };
 
+refs.startButton.setAttribute('disabled', true);
 flatpickr(refs.input, options);
 
 const timer = {
@@ -40,12 +42,23 @@ const timer = {
       return;
     }
 
-    const startTime = Date.now();
     this.isActive = true;
 
-    setInterval(() => {
+    intervalId = setInterval(() => {
       const deadLine = new Date(refs.input.value).getTime();
       const diff = deadLine - new Date();
+      if (diff <= 1000) {
+        clearInterval(intervalId);
+        Notiflix.Report.success(
+          'Start Black Friday 2022!!!!',
+          '',
+          'Go to sales',
+          function reloadPage() {
+            window.location.reload();
+          }
+        );
+      }
+      console.log(diff);
       const { days, hours, minutes, seconds } = convertMs(diff);
 
       updateTimeIterface({ days, hours, minutes, seconds });
