@@ -44,11 +44,11 @@ const timer = {
 
     this.isActive = true;
 
-    intervalId = setInterval(() => {
+    this.intervalId = setInterval(() => {
       const deadLine = new Date(refs.input.value).getTime();
       const diff = deadLine - new Date();
       if (diff <= 1000) {
-        clearInterval(intervalId);
+        clearInterval(this.intervalId);
         Notiflix.Report.success(
           'Start Black Friday 2022!!!!',
           '',
