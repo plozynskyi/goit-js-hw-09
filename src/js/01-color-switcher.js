@@ -8,21 +8,45 @@ const refs = {
   body: document.querySelector('body'),
 };
 
-refs.startButton.addEventListener('click', onButtonStart);
-refs.stopButton.addEventListener('click', onButtonStop);
+const colorRender = {
+  timerId: null,
 
-function onButtonStart() {
-  refs.startButton.setAttribute('disabled', 'disabled');
-  refs.stopButton.removeAttribute('disabled');
+  start() {
+    refs.startButton.setAttribute('disabled', 'disabled');
+    refs.stopButton.removeAttribute('disabled');
 
-  timerId = setInterval(() => {
-    refs.body.style.backgroundColor = getRandomHexColor();
-  }, 1000);
-}
+    this.timerId = setInterval(() => {
+      refs.body.style.backgroundColor = getRandomHexColor();
+    }, 1000);
+  },
 
-function onButtonStop() {
-  refs.startButton.removeAttribute('disabled');
-  refs.stopButton.setAttribute('disabled', 'disabled');
+  stop() {
+    refs.startButton.removeAttribute('disabled');
+    refs.stopButton.setAttribute('disabled', 'disabled');
 
-  clearInterval(timerId);
-}
+    clearInterval(this.timerId);
+  },
+};
+
+refs.startButton.addEventListener('click', () => {
+  colorRender.start();
+});
+refs.stopButton.addEventListener('click', () => {
+  colorRender.stop();
+});
+
+// function onButtonStart() {
+//   refs.startButton.setAttribute('disabled', 'disabled');
+//   refs.stopButton.removeAttribute('disabled');
+
+//   timerId = setInterval(() => {
+//     refs.body.style.backgroundColor = getRandomHexColor();
+//   }, 1000);
+// }
+
+// function onButtonStop() {
+//   refs.startButton.removeAttribute('disabled');
+//   refs.stopButton.setAttribute('disabled', 'disabled');
+
+//   clearInterval(timerId);
+// }
