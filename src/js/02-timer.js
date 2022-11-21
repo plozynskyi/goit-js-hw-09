@@ -8,7 +8,9 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    // console.log(selectedDates[0]);
+    const date = new Date(selectedDates[0]).getTime();
+    console.log(date);
   },
 };
 
@@ -39,13 +41,15 @@ const timer = {
     console.log(date);
     setInterval(() => {
       const currentTime = Date.now();
-      const date = new Date(refs.input.value).getTime();
-      const deltaTime = currentTime - startTime;
-      const { days, hours, minutes, seconds } = convertMs(deltaTime);
+      // const date = Date(refs.input.value).getTime();
+      const { days, hours, minutes, seconds } = convertMs(date);
+      // console.log(date);
+      // const deltaTime = currentTime - startTime;
+      // const { days, hours, minutes, seconds } = convertMs(deltaTime);
       updateTimeIterface({ days, hours, minutes, seconds });
-      console.log(`${days}:${hours}:${minutes}:${seconds}`);
-      console.log(currentTime);
-      console.log();
+
+      // console.log(`${days}:${hours}:${minutes}:${seconds}`);
+      // console.log(currentTime);
     }, 1000);
   },
 };
