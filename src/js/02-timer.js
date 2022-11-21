@@ -2,6 +2,15 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
 
+refs = {
+  input: document.querySelector('#datetime-picker'),
+  startButton: document.querySelector('[data-start]'),
+  secondSpan: document.querySelector('[data-seconds]'),
+  minuteSpan: document.querySelector('[data-minutes]'),
+  hourSpan: document.querySelector('[data-hours]'),
+  daySpan: document.querySelector('[data-days]'),
+};
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -19,15 +28,6 @@ const options = {
     } else refs.startButton.removeAttribute('disabled');
     Notiflix.Notify.success('Скоріше тисни "Start"');
   },
-};
-
-refs = {
-  input: document.querySelector('#datetime-picker'),
-  startButton: document.querySelector('[data-start]'),
-  secondSpan: document.querySelector('[data-seconds]'),
-  minuteSpan: document.querySelector('[data-minutes]'),
-  hourSpan: document.querySelector('[data-hours]'),
-  daySpan: document.querySelector('[data-days]'),
 };
 
 refs.startButton.setAttribute('disabled', true);
