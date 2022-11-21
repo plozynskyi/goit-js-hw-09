@@ -8,11 +8,13 @@ const refs = {
   body: document.querySelector('body'),
 };
 
+refs.stopButton.setAttribute('disabled', true);
+
 const colorRender = {
   timerId: null,
 
   start() {
-    refs.startButton.setAttribute('disabled', 'disabled');
+    refs.startButton.setAttribute('disabled', true);
     refs.stopButton.removeAttribute('disabled');
 
     this.timerId = setInterval(() => {
@@ -22,7 +24,7 @@ const colorRender = {
 
   stop() {
     refs.startButton.removeAttribute('disabled');
-    refs.stopButton.setAttribute('disabled', 'disabled');
+    refs.stopButton.setAttribute('disabled', true);
 
     clearInterval(this.timerId);
   },
