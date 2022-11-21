@@ -40,7 +40,7 @@ const timer = {
     setInterval(() => {
       const currentTime = Date.now();
       const date = new Date(refs.input.value).getTime();
-      const deltaTime = currentTime - date;
+      const deltaTime = currentTime - startTime;
       const { days, hours, minutes, seconds } = convertMs(deltaTime);
       updateTimeIterface({ days, hours, minutes, seconds });
       console.log(`${days}:${hours}:${minutes}:${seconds}`);
