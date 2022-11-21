@@ -35,18 +35,4 @@ refs.stopButton.addEventListener('click', () => {
   colorRender.stop();
 });
 
-// function onButtonStart() {
-//   refs.startButton.setAttribute('disabled', 'disabled');
-//   refs.stopButton.removeAttribute('disabled');
-
-//   timerId = setInterval(() => {
-//     refs.body.style.backgroundColor = getRandomHexColor();
-//   }, 1000);
-// }
-
-// function onButtonStop() {
-//   refs.startButton.removeAttribute('disabled');
-//   refs.stopButton.setAttribute('disabled', 'disabled');
-
-//   clearInterval(timerId);
-// }
+console.log(colorRender);

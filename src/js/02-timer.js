@@ -8,9 +8,15 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    // console.log(selectedDates[0]);
     const date = new Date(selectedDates[0]).getTime();
     console.log(date);
+    if (date < Date.now()) {
+      return (
+        Notiflix.Notify.failure('Обери дату в майбутньому!'),
+        refs.startButton.setAttribute('disabled', true)
+      );
+    } else refs.startButton.removeAttribute('disabled');
+    Notiflix.Notify.success('Скоріше тисни "Start"');
   },
 };
 
@@ -25,31 +31,24 @@ refs = {
 
 flatpickr(refs.input, options);
 
-// let qqqq = refs.input.value;
-// console.log(qqqq.getTime());
-
 const timer = {
   intervalId: null,
   isActive: false,
+
   start() {
     if (this.isActive) {
       return;
     }
+
     const startTime = Date.now();
     this.isActive = true;
-    const date = new Date(refs.input.value).getTime();
-    console.log(date);
-    setInterval(() => {
-      const currentTime = Date.now();
-      // const date = Date(refs.input.value).getTime();
-      const { days, hours, minutes, seconds } = convertMs(date);
-      // console.log(date);
-      // const deltaTime = currentTime - startTime;
-      // const { days, hours, minutes, seconds } = convertMs(deltaTime);
-      updateTimeIterface({ days, hours, minutes, seconds });
 
-      // console.log(`${days}:${hours}:${minutes}:${seconds}`);
-      // console.log(currentTime);
+    setInterval(() => {
+      const deadLine = new Date(refs.input.value).getTime();
+      const diff = deadLine - new Date();
+      const { days, hours, minutes, seconds } = convertMs(diff);
+
+      updateTimeIterface({ days, hours, minutes, seconds });
     }, 1000);
   },
 };
@@ -78,5 +77,3 @@ function updateTimeIterface({ days, hours, minutes, seconds }) {
 function pad(value) {
   return String(value).padStart(2, '0');
 }
-// refs.secondSpan.textContent;
-// console.dir(refs.secondSpan.textContent);
