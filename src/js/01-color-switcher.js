@@ -36,5 +36,3 @@ refs.startButton.addEventListener('click', () => {
 refs.stopButton.addEventListener('click', () => {
   colorRender.stop();
 });
-
-console.log(colorRender);
