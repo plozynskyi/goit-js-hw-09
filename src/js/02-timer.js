@@ -64,6 +64,7 @@ const countdownTimer = {
       const { days, hours, minutes, seconds } = convertMs(deltaTime);
 
       updateTimeIterface({ days, hours, minutes, seconds });
+      refs.startButton.setAttribute('disabled', true);
     }, 1000);
   },
 };
