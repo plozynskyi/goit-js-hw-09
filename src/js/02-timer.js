@@ -11,6 +11,8 @@ const refs = {
   daySpan: document.querySelector('[data-days]'),
 };
 
+refs.startButton.setAttribute('disabled', true);
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -19,7 +21,7 @@ const options = {
   enableSeconds: true,
   onClose(selectedDates) {
     const date = new Date(selectedDates[0]).getTime();
-    console.log(date);
+
     if (date < Date.now()) {
       return (
         Notiflix.Notify.failure('Обери дату в майбутньому!'),
@@ -30,10 +32,9 @@ const options = {
   },
 };
 
-refs.startButton.setAttribute('disabled', true);
 flatpickr(refs.input, options);
 
-const timer = {
+const countdownTimer = {
   intervalId: null,
   isActive: false,
 
@@ -46,8 +47,9 @@ const timer = {
 
     this.intervalId = setInterval(() => {
       const deadLine = new Date(refs.input.value).getTime();
-      const diff = deadLine - new Date();
-      if (diff <= 1000) {
+      const deltaTime = deadLine - new Date();
+
+      if (deltaTime <= 1000) {
         clearInterval(this.intervalId);
         Notiflix.Report.success(
           'Start Black Friday 2022!!!!',
@@ -58,15 +60,15 @@ const timer = {
           }
         );
       }
-      console.log(diff);
-      const { days, hours, minutes, seconds } = convertMs(diff);
+
+      const { days, hours, minutes, seconds } = convertMs(deltaTime);
 
       updateTimeIterface({ days, hours, minutes, seconds });
     }, 1000);
   },
 };
 
-refs.startButton.addEventListener('click', () => timer.start());
+refs.startButton.addEventListener('click', () => countdownTimer.start());
 
 function convertMs(ms) {
   const second = 1000;
