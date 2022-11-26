@@ -1,6 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import Notiflix from 'notiflix';
+import { Notify } from 'notiflix';
+import { Report } from 'notiflix';
 
 const refs = {
   input: document.querySelector('#datetime-picker'),
@@ -24,11 +25,11 @@ const options = {
 
     if (date < options.defaultDate) {
       return (
-        Notiflix.Notify.failure('Обери дату в майбутньому!'),
+        Notify.failure('Обери дату в майбутньому!'),
         refs.startButton.setAttribute('disabled', true)
       );
     } else refs.startButton.removeAttribute('disabled');
-    Notiflix.Notify.success('Скоріше тисни "Start"');
+    Notify.success('Скоріше тисни "Start"');
   },
 };
 
@@ -50,7 +51,7 @@ const countdownTimer = {
 
       if (deltaTime <= 1000) {
         clearInterval(this.intervalId);
-        Notiflix.Report.success(
+        Report.success(
           'Start Black Friday 2022!!!!',
           '',
           'Go to sales',
