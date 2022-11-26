@@ -20,9 +20,9 @@ const options = {
   minuteIncrement: 1,
   enableSeconds: true,
   onClose(selectedDates) {
-    const date = new Date(selectedDates[0]).getTime();
+    const date = new Date(selectedDates[0]);
 
-    if (date < Date.now()) {
+    if (date < options.defaultDate) {
       return (
         Notiflix.Notify.failure('Обери дату в майбутньому!'),
         refs.startButton.setAttribute('disabled', true)
@@ -46,8 +46,7 @@ const countdownTimer = {
     this.isActive = true;
 
     this.intervalId = setInterval(() => {
-      const deadLine = new Date(refs.input.value).getTime();
-      const deltaTime = deadLine - new Date();
+      const deltaTime = new Date(refs.input.value).getTime() - Date.now();
 
       if (deltaTime <= 1000) {
         clearInterval(this.intervalId);
@@ -70,17 +69,22 @@ const countdownTimer = {
   },
 };
 
-refs.startButton.addEventListener('click', () => countdownTimer.start());
+refs.startButton.addEventListener('click', () => {
+  countdownTimer.start();
+  refs.input.setAttribute('disabled', true);
+});
 
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
-  const days = pad(Math.floor(ms / day));
-  const hours = pad(Math.floor((ms % day) / hour));
-  const minutes = pad(Math.floor(((ms % day) % hour) / minute));
-  const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
+  const days = addLeadingZero(Math.floor(ms / day));
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
   return { days, hours, minutes, seconds };
 }
 
@@ -91,6 +95,6 @@ function updateTimeIterface({ days, hours, minutes, seconds }) {
   refs.daySpan.textContent = `${days}`;
 }
 
-function pad(value) {
+function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
