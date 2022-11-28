@@ -11,11 +11,13 @@ refs.formPromis.addEventListener('submit', onButtonSubmit);
 
 function onButtonSubmit(e) {
   e.preventDefault();
+
   createPromises(
     Number(refs.delayPromis.value),
     Number(refs.stepPromis.value),
     Number(refs.amountPromis.value)
   );
+  e.currentTarget.reset();
 }
 
 function createPromises(delay, step, amount) {
